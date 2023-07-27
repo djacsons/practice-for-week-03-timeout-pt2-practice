@@ -23,10 +23,21 @@ slowPrintSum(2, 8); // prints '10' after 500 ms
 ***********************************************************************/
 
 function postponeWithArgs(cb, delay) {
+  let func = cb
   return (...args)=>{
-    let timer = setTimeout(cb, delay)
+    setTimeout(func, delay, ...args)
   }
 }
+
+const greet = (person) => console.log('Hello ' + person + '!');
+const slowGreet = postponeWithArgs(greet, 1000);
+slowGreet('Rose'); // prints 'Hello Rose!' after 1000 ms
+slowGreet('Alex'); // prints 'Hello Alex!' after 1000 ms
+
+const printSum = (num1, num2) => console.log(num1 + num2);
+const slowPrintSum = postponeWithArgs(printSum, 500);
+slowPrintSum(4, 3); // prints '7' after 500 ms
+slowPrintSum(2, 8); // prints '10' after 500 ms
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS  LINE*****************/
 try {
